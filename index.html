@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Digitaler Lebenswürfel</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: sans-serif;
+    }
+
+    .scene {
+      width: 200px;
+      height: 200px;
+      perspective: 800px;
+    }
+
+    .cube {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateX(0deg) rotateY(0deg);
+      transition: transform 1.2s ease-in-out;
+    }
+
+    .face {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle at center, #222 0%, #000 100%);
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #333;
+      box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
+    }
+
+    .face1  { transform: rotateY(0deg) translateZ(100px); }
+    .face2  { transform: rotateY(90deg) translateZ(100px); }
+    .face3  { transform: rotateY(180deg) translateZ(100px); }
+    .face4  { transform: rotateY(-90deg) translateZ(100px); }
+    .face5  { transform: rotateX(90deg) translateZ(100px); }
+    .face6  { transform: rotateX(-90deg) translateZ(100px); }
+
+    .cube:hover {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="scene">
+    <div class="cube" id="cube">
+      <div class="face face1">Kompass</div>
+      <div class="face face2">Fingerprint</div>
+      <div class="face face3">Sanduhr</div>
+      <div class="face face4">Labyrinth</div>
+      <div class="face face5">Wellen</div>
+      <div class="face face6">DNA</div>
+    </div>
+  </div>
+
+  <script>
+    const cube = document.getElementById("cube");
+
+    function getRandomRotation() {
+      const x = Math.floor(Math.random() * 4) * 90;
+      const y = Math.floor(Math.random() * 4) * 90;
+      return { x, y };
+    }
+
+    cube.addEventListener("click", () => {
+      const { x, y } = getRandomRotation();
+      cube.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
+    });
+  </script>
+</body>
+</html>
