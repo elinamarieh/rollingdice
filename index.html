@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>Digitaler Lebenswürfel</title>
+  <title>Digitaler Würfel</title>
   <style>
     body {
       margin: 0;
@@ -18,6 +18,8 @@
       width: 200px;
       height: 200px;
       perspective: 800px;
+      position: relative;
+      overflow: hidden;
     }
 
     .cube {
@@ -25,15 +27,16 @@
       height: 100%;
       position: relative;
       transform-style: preserve-3d;
-      transform: rotateX(0deg) rotateY(0deg);
-      transition: transform 1.2s ease-in-out;
+      transform: rotateX(0deg) rotateY(0deg) translateZ(-100px);
+      transform-origin: center;
+      transition: transform 1.75s cubic-bezier(0.42,0,0.58,1); 
     }
 
     .face {
       position: absolute;
       width: 200px;
       height: 200px;
-      background: radial-gradient(circle at center, #222 0%, #000 100%);
+      background: #fff;
       color: white;
       font-size: 24px;
       font-weight: bold;
@@ -42,6 +45,8 @@
       align-items: center;
       border: 1px solid #333;
       box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
+      background-size: cover;
+      background-position: center;
     }
 
     .face1  { transform: rotateY(0deg) translateZ(100px); }
@@ -51,36 +56,138 @@
     .face5  { transform: rotateX(90deg) translateZ(100px); }
     .face6  { transform: rotateX(-90deg) translateZ(100px); }
 
-    .cube:hover {
+    .hidden {
+      display: none;
+    }
+
+    .back-button {
+      position: absolute;
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 8px 12px;
       cursor: pointer;
+      border-radius: 4px;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
+
   <div class="scene">
-    <div class="cube" id="cube">
-      <div class="face face1">Kompass</div>
-      <div class="face face2">Fingerprint</div>
-      <div class="face face3">Sanduhr</div>
-      <div class="face face4">Labyrinth</div>
-      <div class="face face5">Wellen</div>
-      <div class="face face6">DNA</div>
+    <!-- Hauptwürfel -->
+    <div class="cube" id="main-cube">
+      <div class="face face1" data-target="cube-sozial" style="background-image: url('./images/haupt/sozial.jpg');background-size: cover;"></div>
+      <div class="face face2" data-target="cube-öffentlich" style="background-image: url('./images/haupt/öffentlich.jpg');background-size: cover;"></div>
+      <div class="face face3" data-target="cube-buisness" style="background-image: url('./images/haupt/economic.jpg');background-size: cover;"></div>
+      <div class="face face4" data-target="cube-geistliche" style="background-image: url('./images/haupt/geistlich.jpg');background-size: cover;"></div>
+      <div class="face face5" data-target="cube-künstler" style="background-image: url('./images/haupt/artist.jpg');background-size: cover;"></div>
+      <div class="face face6" data-target="cube-handwerk" style="background-image: url('./images/haupt/handwerker.jpg');background-size: cover;"></div>
+    </div>
+
+    <!-- Folgewürfel-Vorlage -->
+    <div class="cube hidden" id="cube-sozial">
+      <div class="face face1" style="background-image: url('./images/sozial/altenpfleger.jpg');"></div>
+      <div class="face face2" style="background-image: url('./images/sozial/erzieher.jpg');"></div>
+      <div class="face face3" style="background-image: url('./images/sozial/hebamme.jpg');"></div>
+      <div class="face face4" style="background-image: url('./images/sozial/krankenpflege.jpg');"></div>
+      <div class="face face5" style="background-image: url('./images/sozial/sozialarbeiter.jpg');"></div>
+      <div class="face face6" style="background-image: url('./images/sozial/therapeut.jpg');"></div>
+      <button class="back-button" onclick="goBack()">Zurück</button>
+    </div>
+
+    <div class="cube hidden" id="cube-öffentlich">
+      <div class="face face1" style="background-image: url('./images/öffentlich/feuerwehr.jpg');"></div>
+      <div class="face face2" style="background-image: url('./images/öffentlich/gelehrter_.jpg');"></div>
+      <div class="face face3" style="background-image: url('./images/öffentlich/polizei.jpg');"></div>
+      <div class="face face4" style="background-image: url('./images/öffentlich/richter.jpg');"></div>
+      <div class="face face5" style="background-image: url('./images/öffentlich/soldat_.jpg');"></div>
+      <div class="face face6" style="background-image: url('./images/öffentlich/straßenreinigung.jpg');"></div>
+      <button class="back-button" onclick="goBack()">Zurück</button>
+    </div>
+
+    <!-- Weitere Würfel analog -->
+    <div class="cube hidden" id="cube-geistliche">
+      <div class="face face1" style="background-image: url('./images/geistliche/imam_.jpg');"></div>
+      <div class="face face2" style="background-image: url('./images/geistliche/mönch.jpg');"></div>
+      <div class="face face3" style="background-image: url('./images/geistliche/papst.jpg');"></div>
+      <div class="face face4" style="background-image: url('./images/geistliche/philosoph_.jpg');"></div>
+      <div class="face face5" style="background-image: url('./images/geistliche/priester.jpg');"></div>
+      <div class="face face6" style="background-image: url('./images/geistliche/rabbi_.jpg');"></div>
+      <button class="back-button" onclick="goBack()">Zurück</button>
+    </div>
+
+    <div class="cube hidden" id="cube-künstler">
+      <div class="face face1" style="background-image: url('./images/künstler/actor.jpg');"></div>
+      <div class="face face2" style="background-image: url('./images/künstler/grafiker_.jpg');"></div>
+      <div class="face face3" style="background-image: url('./images/künstler/journalist_.jpg');"></div>
+      <div class="face face4" style="background-image: url('./images/künstler/künstler.jpg');"></div>
+      <div class="face face5" style="background-image: url('./images/künstler/musiker_.jpg');"></div>
+      <div class="face face6" style="background-image: url('./images/künstler/videographer_.jpg');"></div>
+      <button class="back-button" onclick="goBack()">Zurück</button>
+    </div>
+    
+    <div class="cube hidden" id="cube-handwerk">
+      <div class="face face1" style="background-image: url('./images/handwerk/bauarbeiter.jpg');"></div>
+      <div class="face face2" style="background-image: url('./images/handwerk/elektriker.jpg');"></div>
+      <div class="face face3" style="background-image: url('./images/handwerk/gärtner.jpg');"></div>
+      <div class="face face4" style="background-image: url('./images/handwerk/koch.jpg');"></div>
+      <div class="face face5" style="background-image: url('./images/handwerk/maurer_.jpg');"></div>
+      <div class="face face6" style="background-image: url('./images/handwerk/schmied.jpg');"></div>
+      <button class="back-button" onclick="goBack()">Zurück</button>
+    </div>
+
+    <div class="cube hidden" id="cube-buisness">
+      <div class="face face1" style="background-image: url('./images/buisness/bankier_.jpg');"></div>
+      <div class="face face2" style="background-image: url('./images/buisness/börse_.jpg');"></div>
+      <div class="face face3" style="background-image: url('./images/buisness/consulting_.jpg');"></div>
+      <div class="face face4" style="background-image: url('./images/buisness/marketing_.jpg');"></div>
+      <div class="face face5" style="background-image: url('./images/buisness/recht_.jpg');"></div>
+      <div class="face face6" style="background-image: url('./images/buisness/start-up.jpg');"></div>
+      <button class="back-button" onclick="goBack()">Zurück</button>
     </div>
   </div>
 
   <script>
-    const cube = document.getElementById("cube");
+    const mainCube = document.getElementById("main-cube");
+    const faces = mainCube.querySelectorAll(".face");
 
-    function getRandomRotation() {
+    function randomRotate(cube) {
       const x = Math.floor(Math.random() * 4) * 90;
       const y = Math.floor(Math.random() * 4) * 90;
-      return { x, y };
+      cube.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
     }
 
-    cube.addEventListener("click", () => {
-      const { x, y } = getRandomRotation();
-      cube.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
+    // Hauptwürfel drehen
+    mainCube.addEventListener("click", () => randomRotate(mainCube));
+
+    // Unterwürfel drehen
+    document.querySelectorAll(".cube:not(#main-cube)").forEach(cube => {
+      cube.addEventListener("click", () => randomRotate(cube));
     });
+
+    // Auf Hauptwürfel-Seite klicken → anderen zeigen
+    faces.forEach(face => {
+      face.addEventListener("click", (e) => {
+        e.stopPropagation(); // Kein Würfeln
+        const targetId = face.getAttribute("data-target");
+        if (targetId) {
+          mainCube.classList.add("hidden");
+          const targetCube = document.getElementById(targetId);
+          targetCube.classList.remove("hidden");
+          targetCube.style.transform = "rotateX(0deg) rotateY(0deg)";
+        }
+      });
+    });
+
+    function goBack() {
+      document.querySelectorAll(".cube").forEach(cube => cube.classList.add("hidden"));
+      mainCube.classList.remove("hidden");
+    }
   </script>
+
 </body>
 </html>
