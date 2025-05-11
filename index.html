@@ -163,28 +163,25 @@
   let rolledSide = null;
   let hasRolled = false;
 
-  mainCube.addEventListener("click", () => {
-    if (!hasRolled) {
-      // 👉 Erster Klick: Würfeln
-      rolledSide = Math.floor(Math.random() * 6) + 1;
-      const { x, y } = rotationMap[rolledSide];
-        mainCube.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
-      hasRolled = true;
-    } else {
-      // 👉 Zweiter Klick: Weiter zum gewählten Würfel
-      if (!rolledSide) return;
+mainCube.addEventListener("click", () => {
+  if (!hasRolled) {
+    rolledSide = Math.floor(Math.random() * 6) + 1;
+    const { x, y } = rotationMap[rolledSide];
+    mainCube.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
+    hasRolled = true;
+  } else {
+    if (!rolledSide) return;
 
-      const { target } = rotationMap[rolledSide];
-      const targetCube = document.getElementById(target);
+    const { target } = rotationMap[rolledSide];
+    const targetCube = document.getElementById(target);
 
-      mainCube.classList.add("hidden");
-      targetCube.classList.remove("hidden");
-      targetCube.style.transform = "rotateX(0deg) rotateY(0deg)";
+    mainCube.classList.add("hidden");
+    targetCube.classList.remove("hidden");
 
-      backButton.classList.remove("hidden");
+    backButton.classList.remove("hidden");
 
-      rolledSide = null;
-      hasRolled = false;
+    rolledSide = null;
+    hasRolled = false;
     }
   });
 
