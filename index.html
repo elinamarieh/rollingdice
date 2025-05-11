@@ -12,15 +12,17 @@
       align-items: center;
       height: 100vh;
       font-family: sans-serif;
+      <button id="back-button" class="back-button hidden" onclick="goBack()">← Zurück</button>
     }
 
     .scene {
-      width: 200px;
-      height: 200px;
-      perspective: 800px;
-      position: relative;
-      overflow: hidden;
-      scale: 2;
+  width: 50vw; 
+  height: 50vw; 
+  max-width: 600px; 
+  max-height: 600px; 
+  perspective: 800px;
+  position: relative;
+  overflow: hidden;
     }
 
     .cube {
@@ -28,26 +30,19 @@
       height: 100%;
       position: relative;
       transform-style: preserve-3d;
-      transform: rotateX(0deg) rotateY(0deg) translateZ(-100px);
+      transform: rotateX(20deg) rotateY(30deg) translateZ(-100px);
       transform-origin: center;
-      transition: transform 1.75s cubic-bezier(0.42,0,0.58,1); 
+      transition: transform 3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     .face {
-      position: absolute;
-      width: 200px;
-      height: 200px;
-      background: #fff;
-      color: white;
-      font-size: 24px;
-      font-weight: bold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover; 
+  background-position: center;
       border: 1px solid #333;
       box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
-      background-size: cover;
-      background-position: center;
     }
 
     .face1  { transform: rotateY(0deg) translateZ(100px); }
@@ -61,19 +56,24 @@
       display: none;
     }
 
-    .back-button {
-      position: absolute;
-      bottom: -50px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #fff;
-      color: #000;
-      border: none;
-      padding: 8px 12px;
-      cursor: pointer;
-      border-radius: 4px;
-      font-size: 14px;
-    }
+.back-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  z-index: 1000;  
+}
+
+.hidden {
+  display: none;
+}
+
   </style>
 </head>
 <body>
@@ -97,7 +97,6 @@
       <div class="face face4" style="background-image: url('./sozial/krankenpflege.jpg');"></div>
       <div class="face face5" style="background-image: url('./sozial/sozialarbeiter.jpg');"></div>
       <div class="face face6" style="background-image: url('./sozial/therapeut.jpg');"></div>
-      <button class="back-button" onclick="goBack()">Zurück</button>
     </div>
 
     <div class="cube hidden" id="cube-öffentlich">
@@ -107,7 +106,6 @@
       <div class="face face4" style="background-image: url('./öffentlich/richter.jpg');"></div>
       <div class="face face5" style="background-image: url('./öffentlich/soldat_.jpg');"></div>
       <div class="face face6" style="background-image: url('./öffentlich/straßenreinigung.jpg');"></div>
-      <button class="back-button" onclick="goBack()">Zurück</button>
     </div>
 
     <!-- Weitere Würfel analog -->
@@ -118,7 +116,6 @@
       <div class="face face4" style="background-image: url('./geistliche/philosoph_.jpg');"></div>
       <div class="face face5" style="background-image: url('./geistliche/priester.jpg');"></div>
       <div class="face face6" style="background-image: url('./geistliche/rabbi_.jpg');"></div>
-      <button class="back-button" onclick="goBack()">Zurück</button>
     </div>
 
     <div class="cube hidden" id="cube-künstler">
@@ -128,7 +125,6 @@
       <div class="face face4" style="background-image: url('./künstler/künstler.jpg');"></div>
       <div class="face face5" style="background-image: url('./künstler/musiker_.jpg');"></div>
       <div class="face face6" style="background-image: url('./künstler/videographer_.jpg');"></div>
-      <button class="back-button" onclick="goBack()">Zurück</button>
     </div>
     
     <div class="cube hidden" id="cube-handwerk">
@@ -138,7 +134,6 @@
       <div class="face face4" style="background-image: url('./handwerk/koch.jpg');"></div>
       <div class="face face5" style="background-image: url('./handwerk/maurer_.jpg');"></div>
       <div class="face face6" style="background-image: url('./handwerk/schmied.jpg');"></div>
-      <button class="back-button" onclick="goBack()">Zurück</button>
     </div>
 
     <div class="cube hidden" id="cube-buisness">
@@ -148,47 +143,60 @@
       <div class="face face4" style="background-image: url('./buisness/marketing_.jpg');"></div>
       <div class="face face5" style="background-image: url('./buisness/recht_.jpg');"></div>
       <div class="face face6" style="background-image: url('./buisness/start-up.jpg');"></div>
-      <button class="back-button" onclick="goBack()">Zurück</button>
     </div>
   </div>
 
-  <script>
-    const mainCube = document.getElementById("main-cube");
-    const faces = mainCube.querySelectorAll(".face");
+   <script>
+  const mainCube = document.getElementById("main-cube");
+  const backButton = document.getElementById("back-button");
 
-    function randomRotate(cube) {
-      const x = Math.floor(Math.random() * 4) * 90;
-      const y = Math.floor(Math.random() * 4) * 90;
-      cube.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
+  // Zuordnung von Würfelseite → Rotation + Zielwürfel
+  const rotationMap = {
+    1: { x: 0, y: 0, target: 'cube-sozial' },
+    2: { x: 0, y: -90, target: 'cube-öffentlich' },
+    3: { x: 0, y: 180, target: 'cube-buisness' },
+    4: { x: 0, y: 90, target: 'cube-geistliche' },
+    5: { x: -90, y: 0, target: 'cube-künstler' },
+    6: { x: 90, y: 0, target: 'cube-handwerk' },
+  };
+
+  let rolledSide = null;
+  let hasRolled = false;
+
+  mainCube.addEventListener("click", () => {
+    if (!hasRolled) {
+      // 👉 Erster Klick: Würfeln
+      rolledSide = Math.floor(Math.random() * 6) + 1;
+      const { x, y } = rotationMap[rolledSide];
+        mainCube.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
+      hasRolled = true;
+    } else {
+      // 👉 Zweiter Klick: Weiter zum gewählten Würfel
+      if (!rolledSide) return;
+
+      const { target } = rotationMap[rolledSide];
+      const targetCube = document.getElementById(target);
+
+      mainCube.classList.add("hidden");
+      targetCube.classList.remove("hidden");
+      targetCube.style.transform = "rotateX(0deg) rotateY(0deg)";
+
+      backButton.classList.remove("hidden");
+
+      rolledSide = null;
+      hasRolled = false;
     }
+  });
 
-    // Hauptwürfel drehen
-    mainCube.addEventListener("click", () => randomRotate(mainCube));
-
-    // Unterwürfel drehen
-    document.querySelectorAll(".cube:not(#main-cube)").forEach(cube => {
-      cube.addEventListener("click", () => randomRotate(cube));
-    });
-
-    // Auf Hauptwürfel-Seite klicken → anderen zeigen
-    faces.forEach(face => {
-      face.addEventListener("click", (e) => {
-        e.stopPropagation(); // Kein Würfeln
-        const targetId = face.getAttribute("data-target");
-        if (targetId) {
-          mainCube.classList.add("hidden");
-          const targetCube = document.getElementById(targetId);
-          targetCube.classList.remove("hidden");
-          targetCube.style.transform = "rotateX(0deg) rotateY(0deg)";
-        }
-      });
-    });
-
-    function goBack() {
-      document.querySelectorAll(".cube").forEach(cube => cube.classList.add("hidden"));
-      mainCube.classList.remove("hidden");
-    }
-  </script>
+  function goBack() {
+    document.querySelectorAll(".cube").forEach(cube => cube.classList.add("hidden"));
+    mainCube.classList.remove("hidden");
+    mainCube.style.transform = "rotateX(0deg) rotateY(0deg)";
+    rolledSide = null;
+    hasRolled = false;
+    backButton.classList.add("hidden");
+  }
+</script>
 
 </body>
 </html>
