@@ -79,7 +79,7 @@
 <body>
  <button id="back-button" class="back-button hidden" onclick="goBack()">← Zurück</button>
   <div class="scene">
-    <!-- Hauptwürfel -->
+ 
     <div class="cube" id="main-cube">
       <div class="face face1" data-target="cube-sozial" style="background-image: url('./haupt/sozial.jpg');background-size: cover;"></div>
       <div class="face face2" data-target="cube-öffentlich" style="background-image: url('./haupt/öffentlich.jpg');background-size: cover;"></div>
@@ -89,7 +89,7 @@
       <div class="face face6" data-target="cube-handwerk" style="background-image: url('./haupt/handwerker.jpg');background-size: cover;"></div>
     </div>
 
-    <!-- Folgewürfel-Vorlage -->
+
     <div class="cube hidden" id="cube-sozial">
       <div class="face face1" style="background-image: url('./sozial/altenpfleger.jpg');"></div>
       <div class="face face2" style="background-image: url('./sozial/erzieher.jpg');"></div>
@@ -147,51 +147,74 @@
   </div>
 
    <script>
-  const mainCube = document.getElementById("main-cube");
-  const backButton = document.getElementById("back-button");
+const mainCube = document.getElementById("main-cube");
+const backButton = document.getElementById("back-button");
 
-  // Zuordnung von Würfelseite → Rotation + Zielwürfel
-  const rotationMap = {
-    1: { x: 0, y: 0, target: 'cube-sozial' },
-    2: { x: 0, y: -90, target: 'cube-öffentlich' },
-    3: { x: 0, y: 180, target: 'cube-buisness' },
-    4: { x: 0, y: 90, target: 'cube-geistliche' },
-    5: { x: -90, y: 0, target: 'cube-künstler' },
-    6: { x: 90, y: 0, target: 'cube-handwerk' },
-  };
 
-  let rolledSide = null;
-  let hasRolled = false;
+const rotationMap = {
+  1: { x: 0, y: 0, target: 'cube-sozial' },
+  2: { x: 0, y: -90, target: 'cube-öffentlich' },
+  3: { x: 0, y: 180, target: 'cube-buisness' },
+  4: { x: 0, y: 90, target: 'cube-geistliche' },
+  5: { x: -90, y: 0, target: 'cube-künstler' },
+  6: { x: 90, y: 0, target: 'cube-handwerk' },
+};
+
+let rolledSide = null;
+let hasRolled = false;
 
 mainCube.addEventListener("click", () => {
   if (!hasRolled) {
+   
     rolledSide = Math.floor(Math.random() * 6) + 1;
     const { x, y } = rotationMap[rolledSide];
+
+
     mainCube.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
+
+   
+    setTimeout(() => {
+      const { target } = rotationMap[rolledSide];
+      const targetCube = document.getElementById(target);
+
+
+      document.querySelectorAll(".cube").forEach(cube => cube.classList.add("hidden"));
+      targetCube.classList.remove("hidden");
+
+     
+      backButton.classList.remove("hidden");
+    }, 3000); 
+
     hasRolled = true;
   } else {
+   
     if (!rolledSide) return;
 
     const { target } = rotationMap[rolledSide];
     const targetCube = document.getElementById(target);
 
-    mainCube.classList.add("hidden");
+   
+    document.querySelectorAll(".cube").forEach(cube => cube.classList.add("hidden"));
     targetCube.classList.remove("hidden");
 
+   
     backButton.classList.remove("hidden");
 
     rolledSide = null;
     hasRolled = false;
-    }
-  });
+  }
+});
 
-  function goBack() {
-    document.querySelectorAll(".cube").forEach(cube => cube.classList.add("hidden"));
-    mainCube.classList.remove("hidden");
-    mainCube.style.transform = "rotateX(0deg) rotateY(0deg)";
-    rolledSide = null;
-    hasRolled = false;
-    backButton.classList.add("hidden");
+function goBack() {
+
+  document.querySelectorAll(".cube").forEach(cube => cube.classList.add("hidden"));
+  mainCube.classList.remove("hidden");
+  mainCube.style.transform = "rotateX(0deg) rotateY(0deg)";
+  rolledSide = null;
+  hasRolled = false;
+  backButton.classList.add("hidden");
+}
+
   }
 </script>
 
