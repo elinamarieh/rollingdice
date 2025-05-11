@@ -186,23 +186,7 @@ mainCube.addEventListener("click", () => {
     }, 3000); 
 
     hasRolled = true;
-  } else {
-   
-    if (!rolledSide) return;
-
-    const { target } = rotationMap[rolledSide];
-    const targetCube = document.getElementById(target);
-
-   
-    document.querySelectorAll(".cube").forEach(cube => cube.classList.add("hidden"));
-    targetCube.classList.remove("hidden");
-
-   
-    backButton.classList.remove("hidden");
-
-    rolledSide = null;
-    hasRolled = false;
-  }
+ }
 });
 
 function goBack() {
