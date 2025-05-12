@@ -181,9 +181,14 @@ mainCube.addEventListener("click", () => {
       document.querySelectorAll(".cube").forEach(cube => cube.classList.add("hidden"));
       targetCube.classList.remove("hidden");
 
-     
+      const randomX = Math.floor(Math.random() * 1080);
+  const randomY = Math.floor(Math.random() * 1080);
+
+  targetCube.style.transition = "transform 2s ease-in-out";
+  targetCube.style.transform = `rotateX(${randomX}deg) rotateY(${randomY}deg)`;
+      
       backButton.classList.remove("hidden");
-    }, 3000); 
+    }, 5000); 
 
     hasRolled = true;
  }
