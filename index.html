@@ -15,10 +15,10 @@
     }
 
     .scene {
-      width: 50vw; 
-      height: 50vw; 
-      max-width: 600px; 
-      max-height: 600px; 
+      width: 50vw;
+      height: 50vw;
+      max-width: 600px;
+      max-height: 600px;
       perspective: 1000px;
       position: relative;
       overflow: hidden;
@@ -38,22 +38,76 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      background-size: cover; 
+      background-size: cover;
       background-position: center;
       border: 1px solid #333;
       box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
     }
 
-    .face1  { transform: rotateY(0deg) translateZ(25vw); }
-    .face2  { transform: rotateY(90deg) translateZ(25vw); }
-    .face3  { transform: rotateY(180deg) translateZ(25vw); }
-    .face4  { transform: rotateY(-90deg) translateZ(25vw); }
-    .face5  { transform: rotateX(90deg) translateZ(25vw); }
-    .face6  { transform: rotateX(-90deg) translateZ(25vw); }
+  /* --- Gesichtsausrichtung für ALLE Würfel: richtig herum --- */
+
+/* Hauptwürfel (main-cube) */
+#main-cube .face1 { transform: rotateY(0deg) translateZ(25vw) rotateY(180deg); }
+#main-cube .face2 { transform: rotateY(90deg) translateZ(25vw) rotateY(180deg); }
+#main-cube .face3 { transform: rotateY(180deg) translateZ(25vw) rotateY(180deg); }
+#main-cube .face4 { transform: rotateY(-90deg) translateZ(25vw) rotateY(180deg); }
+#main-cube .face5 { transform: rotateX(90deg) translateZ(25vw) rotateX(180deg); }
+#main-cube .face6 { transform: rotateX(-90deg) translateZ(25vw) rotateX(180deg); }
+
+/* Zweite Würfel (alle) */
+#cube-sozial .face1,
+#cube-öffentlich .face1,
+#cube-buisness .face1,
+#cube-geistliche .face1,
+#cube-künstler .face1,
+#cube-handwerk .face1 { transform: rotateY(0deg) translateZ(25vw) rotateY(180deg); }
+
+#cube-sozial .face2,
+#cube-öffentlich .face2,
+#cube-buisness .face2,
+#cube-geistliche .face2,
+#cube-künstler .face2,
+#cube-handwerk .face2 { transform: rotateY(90deg) translateZ(25vw) rotateY(180deg); }
+
+#cube-sozial .face3,
+#cube-öffentlich .face3,
+#cube-buisness .face3,
+#cube-geistliche .face3,
+#cube-künstler .face3,
+#cube-handwerk .face3 { transform: rotateY(180deg) translateZ(25vw) rotateY(180deg); }
+
+#cube-sozial .face4,
+#cube-öffentlich .face4,
+#cube-buisness .face4,
+#cube-geistliche .face4,
+#cube-künstler .face4,
+#cube-handwerk .face4 { transform: rotateY(-90deg) translateZ(25vw) rotateY(180deg); }
+
+#cube-sozial .face5,
+#cube-öffentlich .face5,
+#cube-buisness .face5,
+#cube-geistliche .face5,
+#cube-künstler .face5,
+#cube-handwerk .face5 { transform: rotateX(90deg) translateZ(25vw) rotateX(180deg); }
+
+#cube-sozial .face6,
+#cube-öffentlich .face6,
+#cube-buisness .face6,
+#cube-geistliche .face6,
+#cube-künstler .face6,
+#cube-handwerk .face6 { transform: rotateX(-90deg) translateZ(25vw) rotateX(180deg); }
+
 
     .hidden {
       display: none;
     }
+
+    @media (max-width: 500px) {
+  .scene {
+    width: 90vw;
+    height: 90vw;
+  }
+
 
     .back-button {
       position: fixed;
@@ -91,7 +145,6 @@
       <div class="face face6" style="background-image: url('./sozial/therapeut.jpg');"></div>
     </div>
 
-    <!-- Weitere Würfel analog -->
     <div class="cube hidden" id="cube-öffentlich">
       <div class="face face1" style="background-image: url('./öffentlich/feuerwehr.jpg');"></div>
       <div class="face face2" style="background-image: url('./öffentlich/gelehrter_.jpg');"></div>
@@ -101,7 +154,7 @@
       <div class="face face6" style="background-image: url('./öffentlich/straßenreinigung.jpg');"></div>
     </div>
 
-    <div class="cube hidden" id="cube-geistliche">
+      <div class="cube hidden" id="cube-geistliche">
       <div class="face face1" style="background-image: url('./geistliche/imam_.jpg');"></div>
       <div class="face face2" style="background-image: url('./geistliche/mönch.jpg');"></div>
       <div class="face face3" style="background-image: url('./geistliche/papst.jpg');"></div>
@@ -138,57 +191,63 @@
     </div>
   </div>
 
-  <script>
-    const mainCube = document.getElementById("main-cube");
-    const backButton = document.getElementById("back-button");
+ <script>
+const mainCube = document.getElementById("main-cube");
+const backButton = document.getElementById("back-button");
 
-    const rotationMap = {
-      1: { x: 0, y: 0, target: 'cube-sozial' },
-      2: { x: 0, y: -90, target: 'cube-öffentlich' },
-      3: { x: 0, y: 180, target: 'cube-buisness' },
-      4: { x: 0, y: 90, target: 'cube-geistliche' },
-      5: { x: -90, y: 0, target: 'cube-künstler' },
-      6: { x: 90, y: 0, target: 'cube-handwerk' },
-    };
+const rotationMap = {
+  1: { x: 0, y: 0, target: 'cube-sozial' },
+  2: { x: 0, y: -90, target: 'cube-öffentlich' },
+  3: { x: 0, y: 180, target: 'cube-buisness' },
+  4: { x: 0, y: 90, target: 'cube-geistliche' },
+  5: { x: -90, y: 0, target: 'cube-künstler' },
+  6: { x: 90, y: 0, target: 'cube-handwerk' },
+};
 
-    let rolledSide = null;
-    let hasRolled = false;
+let rolledSide = null;
+let hasRolled = false;
 
-    mainCube.addEventListener("click", () => {
-      if (!hasRolled) {
-        rolledSide = Math.floor(Math.random() * 6) + 1;
-        const { x, y } = rotationMap[rolledSide];
+mainCube.addEventListener("click", () => {
+  if (!hasRolled) {
+    rolledSide = Math.floor(Math.random() * 6) + 1;
+    const { x, y } = rotationMap[rolledSide];
+    mainCube.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
 
-        mainCube.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
+    setTimeout(() => {
+      const { target } = rotationMap[rolledSide];
+      const targetCube = document.getElementById(target);
 
-        setTimeout(() => {
-          const { target } = rotationMap[rolledSide];
-          const targetCube = document.getElementById(target);
-
-          document.querySelectorAll(".cube").forEach(cube => cube.classList.add("hidden"));
-          targetCube.classList.remove("hidden");
-
-     
-          const randomX = Math.floor(Math.random() * 1080);
-          const randomY = Math.floor(Math.random() * 1080);
-
-          targetCube.style.transition = "transform 2s ease-in-out";
-          targetCube.style.transform = `rotateX(${randomX}deg) rotateY(${randomY}deg)`;
-
-          backButton.classList.remove("hidden");
-        }, 5000); 
-        hasRolled = true;
-      }
-    });
-
-    function goBack() {
+      // Zeige NUR den zweiten Würfel
       document.querySelectorAll(".cube").forEach(cube => cube.classList.add("hidden"));
-      mainCube.classList.remove("hidden");
-      mainCube.style.transform = "rotateX(0deg) rotateY(0deg)";
-      rolledSide = null;
-      hasRolled = false;
-      backButton.classList.add("hidden");
-    }
-  </script>
+      targetCube.classList.remove("hidden");
+
+      // Setze anfängliche Position zurück (damit reset funktioniert)
+      targetCube.style.transition = "none";
+      targetCube.style.transform = "rotateX(0deg) rotateY(0deg)";
+
+      // Warte einen Frame, bevor die Rotation startet
+      requestAnimationFrame(() => {
+        const randomX = Math.floor(Math.random() * 1080);
+        const randomY = Math.floor(Math.random() * 1080);
+        targetCube.style.transition = "transform 2s ease-in-out";
+        targetCube.style.transform = `rotateX(${randomX}deg) rotateY(${randomY}deg)`;
+      });
+
+      backButton.classList.remove("hidden");
+    }, 5000); // Zeit des ersten Würfel-Wurfs
+    hasRolled = true;
+  }
+});
+
+function goBack() {
+  document.querySelectorAll(".cube").forEach(cube => cube.classList.add("hidden"));
+  mainCube.classList.remove("hidden");
+  mainCube.style.transform = "rotateX(0deg) rotateY(0deg)";
+  rolledSide = null;
+  hasRolled = false;
+  backButton.classList.add("hidden");
+}
+</script>
+
 </body>
 </html>
