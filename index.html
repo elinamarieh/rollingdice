@@ -32,7 +32,15 @@
       transform: rotateX(0deg) rotateY(0deg);
       transform-origin: center;
       transition: transform 3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      display: block; 
+  opacity: 1; 
+  transition: opacity 0.5s ease-in-out, transform 2s ease-in-out;
     }
+   
+    .cube.hidden {
+  display: none; 
+}
+
 
     .face {
       position: absolute;
@@ -64,7 +72,7 @@
   transform: rotateX(-90deg) translateZ(25vw);
 }
 
-/* Den gleichen Code müssen wir auf die Seiten der zweiten Würfel anwenden */
+
 #cube-sozial .face1,
 #cube-öffentlich .face1,
 #cube-buisness .face1,
@@ -239,24 +247,24 @@ mainCube.addEventListener("click", () => {
       const { target } = rotationMap[rolledSide];
       const targetCube = document.getElementById(target);
 
-      // Zeige NUR den zweiten Würfel
+      // Verstecke den Hauptwürfel, aber behalte den Übergang im Auge
       document.querySelectorAll(".cube").forEach(cube => cube.classList.add("hidden"));
       targetCube.classList.remove("hidden");
 
-      // Setze anfängliche Position zurück (damit reset funktioniert)
+      // Setze anfängliche Position des Zielwürfels zurück (damit der Übergang funktioniert)
       targetCube.style.transition = "none";
       targetCube.style.transform = "rotateX(0deg) rotateY(0deg)";
 
-      // Warte einen Frame, bevor die Rotation startet
+      // Warte einen Frame, bevor die Rotation des Zielwürfels startet
       requestAnimationFrame(() => {
         const randomX = Math.floor(Math.random() * 1080);
         const randomY = Math.floor(Math.random() * 1080);
-        targetCube.style.transition = "transform 2s ease-in-out";
-        targetCube.style.transform = `rotateX(${randomX}deg) rotateY(${randomY}deg)`;
+         targetCube.style.transition = "transform 2s ease-in-out";
+        targetCube.style.transform = `rotateX(0deg) rotateY(0deg)`;
       });
 
-      backButton.classList.remove("hidden");
-    }, 5000); // Zeit des ersten Würfel-Wurfs
+      backButton.classList.remove("hidden");  
+    }, 5000); 
     hasRolled = true;
   }
 });
