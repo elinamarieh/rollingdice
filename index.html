@@ -240,29 +240,34 @@ mainCube.addEventListener("click", () => {
   if (!hasRolled) {
     rolledSide = Math.floor(Math.random() * 6) + 1;
     let { x, y } = rotationMap[rolledSide];
-    console.log("Rotating main by: ", x, " and ", y);
+    /* If 0 is rolled rotate 360 deg around y */
+    if (x === 0 && y === 0) {
+        y = 360;
+      }
     mainCube.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
     /* mainCube.classList.remove("visible"); */
 
     setTimeout(() => {
       const { target } = rotationMap[rolledSide];
-      console.log("Target string: ", target);
       /* Roll again */
       rolledSubSide = Math.floor(Math.random() * 6) + 1;
       let { x, y } = rotationMap[rolledSubSide];
-      console.log("Rotating subtarget by: ", x, " and ", y);
+      /* If 0 is rolled rotate 360 deg around x */
+       if (x === 0 && y === 0) {
+        x = 360;
+      }
       /* Get content set for dereferencing */
-      console.log("Initial sets: ", cubeContentMap);
       let contentSet = cubeContentMap[target];
-      console.log("Updating cube faces with: ", contentSet);
       /* Update the main cube now */
       updateCubeFaces(contentSet);
       /* "AND HE IS SPINNNING THE WHEEEEEEL" :D */
       mainCube.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
-
-      /* Add the back button */
-      backButton.classList.remove("hidden");  
     }, 5000);
+
+    /* Show back button after the animation */
+    setTimeout(() => {
+      backButton.classList.remove("hidden");
+    }, 7500);
     hasRolled = true;
   }
 });
