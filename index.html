@@ -159,7 +159,7 @@
   <div class="scene">
     <div class="cube" id="main-cube">
       <div class="face face1" data-target="cube-sozial" style="background-image: url('./haupt/sozial.jpg');"></div>
-      <div class="face face2" data-target="cube-öffentlich" style="background-image: url('./haupt/öffentlich.jpg');"></div>
+      <div class="face face2" data-target="cube-öffentlich" style="background-image: url('./haupt/oeffentlich.jpg');"></div>
       <div class="face face3" data-target="cube-buisness" style="background-image: url('./haupt/economic.jpg');"></div>
       <div class="face face4" data-target="cube-geistliche" style="background-image: url('./haupt/geistlich.jpg');"></div>
       <div class="face face5" data-target="cube-künstler" style="background-image: url('./haupt/artist.jpg');"></div>
@@ -176,17 +176,17 @@
     </div>
 
     <div class="cube hidden" id="cube-öffentlich">
-      <div class="face face1" style="background-image: url('./öffentlich/feuerwehr.jpg');"></div>
-      <div class="face face2" style="background-image: url('./öffentlich/gelehrter_.jpg');"></div>
-      <div class="face face3" style="background-image: url('./öffentlich/polizei.jpg');"></div>
-      <div class="face face4" style="background-image: url('./öffentlich/richter.jpg');"></div>
-      <div class="face face5" style="background-image: url('./öffentlich/soldat_.jpg');"></div>
-      <div class="face face6" style="background-image: url('./öffentlich/straßenreinigung.jpg');"></div>
+      <div class="face face1" style="background-image: url('./oeffentlich/feuerwehr.jpg');"></div>
+      <div class="face face2" style="background-image: url('./oeffentlich/gelehrter_.jpg');"></div>
+      <div class="face face3" style="background-image: url('./oeffentlich/polizei.jpg');"></div>
+      <div class="face face4" style="background-image: url('./oeffentlich/richter.jpg');"></div>
+      <div class="face face5" style="background-image: url('./oeffentlich/soldat_.jpg');"></div>
+      <div class="face face6" style="background-image: url('./oeffentlich/strassenreinigung.jpg');"></div>
     </div>
 
       <div class="cube hidden" id="cube-geistliche">
       <div class="face face1" style="background-image: url('./geistliche/imam_.jpg');"></div>
-      <div class="face face2" style="background-image: url('./geistliche/mönch.jpg');"></div>
+      <div class="face face2" style="background-image: url('./geistliche/moench.jpg');"></div>
       <div class="face face3" style="background-image: url('./geistliche/papst.jpg');"></div>
       <div class="face face4" style="background-image: url('./geistliche/philosoph_.jpg');"></div>
       <div class="face face5" style="background-image: url('./geistliche/priester.jpg');"></div>
@@ -194,18 +194,18 @@
     </div>
 
     <div class="cube hidden" id="cube-künstler">
-      <div class="face face1" style="background-image: url('./künstler/actor.jpg');"></div>
-      <div class="face face2" style="background-image: url('./künstler/grafiker_.jpg');"></div>
-      <div class="face face3" style="background-image: url('./künstler/journalist_.jpg');"></div>
-      <div class="face face4" style="background-image: url('./künstler/künstler.jpg');"></div>
-      <div class="face face5" style="background-image: url('./künstler/musiker_.jpg');"></div>
-      <div class="face face6" style="background-image: url('./künstler/videographer_.jpg');"></div>
+      <div class="face face1" style="background-image: url('./kuenstler/actor.jpg');"></div>
+      <div class="face face2" style="background-image: url('./kuenstler/grafiker_.jpg');"></div>
+      <div class="face face3" style="background-image: url('./kuenstler/journalist_.jpg');"></div>
+      <div class="face face4" style="background-image: url('./kuenstler/kuenstler.jpg');"></div>
+      <div class="face face5" style="background-image: url('./kuenstler/musiker_.jpg');"></div>
+      <div class="face face6" style="background-image: url('./kuenstler/videographer_.jpg');"></div>
     </div>
     
     <div class="cube hidden" id="cube-handwerk">
       <div class="face face1" style="background-image: url('./handwerk/bauarbeiter.jpg');"></div>
       <div class="face face2" style="background-image: url('./handwerk/elektriker.jpg');"></div>
-      <div class="face face3" style="background-image: url('./handwerk/gärtner.jpg');"></div>
+      <div class="face face3" style="background-image: url('./handwerk/gaertner.jpg');"></div>
       <div class="face face4" style="background-image: url('./handwerk/koch.jpg');"></div>
       <div class="face face5" style="background-image: url('./handwerk/maurer_.jpg');"></div>
       <div class="face face6" style="background-image: url('./handwerk/schmied.jpg');"></div>
@@ -213,7 +213,7 @@
 
     <div class="cube hidden" id="cube-buisness">
       <div class="face face1" style="background-image: url('./business/bankier_.jpg');"></div>
-      <div class="face face2" style="background-image: url('./business/börse_.jpg');"></div>
+      <div class="face face2" style="background-image: url('./business/boerse_.jpg');"></div>
       <div class="face face3" style="background-image: url('./business/consulting_.jpg');"></div>
       <div class="face face4" style="background-image: url('./business/marketing_.jpg');"></div>
       <div class="face face5" style="background-image: url('./business/recht_.jpg');"></div>
@@ -246,7 +246,9 @@ mainCube.addEventListener("click", () => {
     setTimeout(() => {
       const { target } = rotationMap[rolledSide];
       const targetCube = document.getElementById(target);
-
+      console.log("Rolled side: ", rolledSide);
+      console.log("Target is: ", target);
+      console.log("Target cube is: ", targetCube);
       // Verstecke den Hauptwürfel, aber behalte den Übergang im Auge
       document.querySelectorAll(".cube").forEach(cube => cube.classList.add("hidden"));
       targetCube.classList.remove("hidden");
